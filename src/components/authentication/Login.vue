@@ -20,6 +20,9 @@ export default {
                 password: 'admin'
             }
         }
+    },
+    created(){
+        this.$store.dispatch('getTesting')
     }
 }
 </script>
