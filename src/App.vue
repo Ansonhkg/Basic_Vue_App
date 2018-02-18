@@ -1,12 +1,19 @@
 <template>
   <div id="app">
+    <vue-header></vue-header>
     <router-view/>
   </div>
 </template>
 
 <script>
+
+import Header from '@/components/layouts/Header'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    'vue-header' : Header,
+  }
 }
 </script>
 
