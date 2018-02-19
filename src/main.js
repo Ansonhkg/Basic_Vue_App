@@ -15,13 +15,10 @@ Vue.use(VueAxios, axios)
 Vue.use(Middleware)
 
 // Add a response interceptor
-axios.interceptors.response.use((response) => {
-	return response
-}, (error) => {
-	var status = error.response.status
-	console.log(status)
-})
+Vue.middleware.responseInterceptor(axios)
 
+// Resolve routes for every new request
+Vue.middleware.routeResolver(router)
 
 /* eslint-disable no-new */
 new Vue({

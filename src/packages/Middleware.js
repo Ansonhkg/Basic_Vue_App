@@ -27,16 +27,40 @@ export default function (Vue) {
         **/
        responseHandler : ({commit}, [response, successMessage, errorMessage]) => {
 
-        if(response.status === undefined || response.status != 200){
-            commit('addMessages', errorMessage)
-        }else{
-            commit('addMessages', successMessage)
-        }
+            if(response.status === undefined || response.status != 200){
+                commit('addMessages', errorMessage)
+            }else{
+                commit('addMessages', successMessage)
+            }
 
-        setTimeout(function(){
-            commit('clearMessages')
-        }, store.state.messageModule.messageDuration)
-    },
+            setTimeout(function(){
+                commit('clearMessages')
+            }, store.state.messageModule.messageDuration)
+        },
+
+        /**
+        * Description: Response Interceptor
+        * Must use axios
+        **/
+        responseInterceptor : (axios) => {
+            axios.interceptors.response.use((response) => {
+                return response
+            }, (error) => {
+                var status = error.response.status
+                console.log(status)
+            })
+        },
+
+        /**
+        * Description: Resolve routes for every new request
+        * Must use router
+        **/
+        routeResolver: (router) => {
+            router.beforeEach((to, from, next) => {
+                console.log("Calling route resolver.")
+                next()
+            })
+        }
 
     }
 
