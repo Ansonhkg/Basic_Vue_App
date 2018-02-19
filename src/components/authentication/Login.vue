@@ -22,7 +22,7 @@ export default {
         }
     },
     created(){
-        this.$store.dispatch('getTesting')
+        this.$store.dispatch('getSample')
     }
 }
 </script>

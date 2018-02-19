@@ -17,19 +17,46 @@ export const store = new Vuex.Store({
             hasError: null,
             isSuccess: null,
             messages: [],
-            messageDuration: 1500,
+            messageDuration: 2000,
         }
     },
-    mutation:{
-
+    mutations:{
+        addMessages: (state, message) => {
+            state.status.messages.push(message)
+        },
+        clearMessages: (state) => {
+            state.status.messages = []
+        }
     },
     actions:{
-        getTesting({dispatch, commit}){
+
+        responseHandler : ({dispatch, commit}, [response, successMessage, errorMessage]) => {
+
+            if(response.status === undefined || response.status != 200){
+                commit('addMessages', errorMessage)
+            }else{
+                commit('addMessages', successMessage)
+            }
             
-            Vue.axios.get('http://api.gymconnect.local/api/test/').then((response) => {
-                console.log(response)
-            }).catch((e) => {
-                console.log("Unable to fetch testing data.")
+            setTimeout(function(){
+                commit('clearMessages')
+            }, store.state.status.messageDuration)
+        },
+
+        async getSample({dispatch, commit}){
+            
+            return new Promise((resolve, reject) => {
+                Vue.axios.get('https://jsonplaceholder.typicode.com/posts/1').then((response) => {
+                    resolve(response)
+                }).catch((e) => {
+                    reject()
+                })
+            }).then((response) => {
+                dispatch('responseHandler', [
+                    response,
+                    "Successfully fetched testing data.",
+                    "Unable to fetch testing data"
+                ])
             })
         }
     }
