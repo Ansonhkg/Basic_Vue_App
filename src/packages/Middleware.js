@@ -40,7 +40,7 @@ export default function (Vue) {
 
         /**
         * Description: Response Interceptor
-        * Must use axios
+        * Must use `axios` in main.js
         **/
         responseInterceptor : (axios) => {
             axios.interceptors.response.use((response) => {
@@ -53,7 +53,7 @@ export default function (Vue) {
 
         /**
         * Description: Resolve routes for every new request
-        * Must use router
+        * Must use `router` in main.js
         **/
         routeResolver: (router) => {
             router.beforeEach((to, from, next) => {

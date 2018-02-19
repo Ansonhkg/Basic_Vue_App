@@ -7,11 +7,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import {store} from './store/store'
 
+import Auth from './packages/auth/Auth.js'
 import Middleware from './packages/Middleware.js'
 
 Vue.config.productionTip = false
 
 Vue.use(VueAxios, axios)
+Vue.use(Auth)
 Vue.use(Middleware)
 
 // Add a response interceptor
