@@ -29,7 +29,21 @@ export const store = new Vuex.Store({
         }
     },
     actions:{
+        /**
+        * Description: Asynchonize all actions in actions array
+        * Type: General
+        * Note:        Function type must be 'async' and returns Promise
+        * Usage:     dispatch(['actionA', 'actionB']) 
+        **/
+       async asyncActions({dispatch, commit}, actions){
+            for(var index in actions)
+                await dispatch(actions[index])
+        },
 
+        /**
+        * Description: Handle Responses
+        * Type: General
+        **/
         responseHandler : ({dispatch, commit}, [response, successMessage, errorMessage]) => {
 
             if(response.status === undefined || response.status != 200){
@@ -43,6 +57,10 @@ export const store = new Vuex.Store({
             }, store.state.status.messageDuration)
         },
 
+        /**
+        * Description: A sample of a GET request using responseHandler
+        * Request: GET
+        **/
         async getSample({dispatch, commit}){
             
             return new Promise((resolve, reject) => {
