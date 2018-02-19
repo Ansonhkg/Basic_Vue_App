@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Router from '../router'
+import {messageModule} from '../packages/Middleware'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+    modules:{
+        message: messageModule
+    },
     state:{
         /* Site Configuration */
         API_ENDPOINT : '',
@@ -16,17 +20,10 @@ export const store = new Vuex.Store({
             loginWaiting: false,
             hasError: null,
             isSuccess: null,
-            messages: [],
-            messageDuration: 2000,
         }
     },
     mutations:{
-        addMessages: (state, message) => {
-            state.status.messages.push(message)
-        },
-        clearMessages: (state) => {
-            state.status.messages = []
-        }
+
     },
     actions:{
         /**
@@ -40,22 +37,6 @@ export const store = new Vuex.Store({
                 await dispatch(actions[index])
         },
 
-        /**
-        * Description: Handle Responses
-        * Type: General
-        **/
-        responseHandler : ({dispatch, commit}, [response, successMessage, errorMessage]) => {
-
-            if(response.status === undefined || response.status != 200){
-                commit('addMessages', errorMessage)
-            }else{
-                commit('addMessages', successMessage)
-            }
-            
-            setTimeout(function(){
-                commit('clearMessages')
-            }, store.state.status.messageDuration)
-        },
 
         /**
         * Description: A sample of a GET request using responseHandler
@@ -70,7 +51,8 @@ export const store = new Vuex.Store({
                     reject()
                 })
             }).then((response) => {
-                dispatch('responseHandler', [
+
+                Vue.middleware.responseHandler({commit}, [
                     response,
                     "Successfully fetched testing data.",
                     "Unable to fetch testing data"

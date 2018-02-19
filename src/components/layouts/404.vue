@@ -1,12 +1,10 @@
 <template>
-<div class="Content__Container overflow-hidden">
     <div class="Content">
         <h1>PAGE NOT FOUND!</h1>
         <hr>
         <h2>Sorry, but we couldn't find this page!</h2>
         <a @click="back()" class="blue-green" id="back">Back to last page in <b>{{counter}}</b> seconds ...</a>
     </div>
-</div>
 </template>
 <script>
 
