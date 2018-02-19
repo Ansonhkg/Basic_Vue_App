@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     modules:{
-        message: messageModule
+        messageModule: messageModule
     },
     state:{
         /* Site Configuration */

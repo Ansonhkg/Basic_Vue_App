@@ -35,7 +35,7 @@ export default function (Vue) {
 
         setTimeout(function(){
             commit('clearMessages')
-        }, store.state.message.messageDuration)
+        }, store.state.messageModule.messageDuration)
     },
 
     }
